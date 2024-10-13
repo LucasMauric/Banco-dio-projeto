@@ -16,7 +16,7 @@ public class ClienteRestController {
         return ResponseEntity.ok(clienteService.buscarTodos());
     }
     @GetMapping("/{id}")
-    public ResponseEntity buscarPorId(@PathVariable Long id){
+    public ResponseEntity<Cliente> buscarPorId(@PathVariable Long id){
         return ResponseEntity.ok(clienteService.buscarPorId(id));
     }
 

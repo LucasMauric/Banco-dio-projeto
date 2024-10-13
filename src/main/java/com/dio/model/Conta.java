@@ -3,17 +3,24 @@ package com.dio.model;
 import jakarta.persistence.*;
 
 @Entity
-public class Conta extends Banco {
+public class Conta  {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+    private Long id;
     private String numeroConta;
     private String agencia;
     private double saldo;
     private String chavePix;
     @ManyToOne
-    @JoinColumn(name = "banco_id")
     private Banco banco;
+
+    public Banco getBanco() {
+        return banco;
+    }
+
+    public void setBanco(Banco banco) {
+        this.banco = banco;
+    }
 
     public void setId(long id) {
         this.id = id;
@@ -54,11 +61,5 @@ public class Conta extends Banco {
         this.saldo = saldo;
     }
 
-    public Banco getBanco() {
-        return banco;
-    }
 
-    public void setBanco(Banco banco) {
-        this.banco = banco;
-    }
 }

@@ -1,11 +1,9 @@
 package com.dio.service.impl;
-import com.dio.model.Banco;
-import com.dio.model.BancoRepository;
-import com.dio.model.Conta;
-import com.dio.model.ContaRepository;
+import com.dio.model.*;
 import com.dio.service.IConta;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import java.util.Optional;
 import java.util.random.RandomGenerator;
 @Service
@@ -20,19 +18,17 @@ public class ContaImplService implements IConta {
         return RandomGenerator.getDefault().toString();
     }
 
-
-
     @Override
     public Conta inserirConta(Conta conta) {
-        if(!contaRepository.existsById(conta.getNumeroConta()))
+        if(!contaRepository.existsById(conta.id()))
             conta.setChavePix(gerarChavePix());
         contaRepository.save(conta);
         return conta;
     }
 
     @Override
-    public void sacar(String numeroConta, double valor) {
-        Optional<Conta> banco =  contaRepository.findById(numeroConta);
+    public void sacar(Long id , double valor) {
+        Optional<Conta> banco =  contaRepository.findById(id);
         if(banco.isPresent()){
             double saldoRetirado = banco.get().getSaldo() - valor;
             banco.get().setSaldo(saldoRetirado);
@@ -40,12 +36,11 @@ public class ContaImplService implements IConta {
         }else{
             System.out.println("Saldo insuficiente!");
         }
-
     }
 
     @Override
-    public void depositar(String  numeroConta , Double valor) {
-        Optional<Conta> conta = contaRepository.findById(numeroConta);
+    public void depositar(Long id , Double valor) {
+        Optional<Conta> conta = contaRepository.findById(id);
         if(conta.isPresent()){
             double saldoDepositar = conta.get().getSaldo() + valor;
             conta.get().setSaldo(saldoDepositar);
@@ -54,8 +49,8 @@ public class ContaImplService implements IConta {
     }
 
     @Override
-    public void transferir(Double valor, String chavePix) {
-        Optional<Conta> contaDestino = contaRepository.findById(chavePix);
+    public void transferir(Double valor, Long id) {
+        Optional<Conta> contaDestino = contaRepository.findById(id);
         if(contaDestino.isPresent()){
             double novoSaldo = contaDestino.get().getSaldo() + valor;
             contaDestino.get().setSaldo(novoSaldo);
@@ -66,18 +61,14 @@ public class ContaImplService implements IConta {
     }
 
     @Override
-    public void inserirBanco(Banco banco, long id, Conta conta) {
-        Optional<Banco> verificarBanco = bancoRepository.findById(id);
-        if( verificarBanco.isEmpty()){
-            Conta novaConta = inserirConta(conta);
-            banco.setConta(novaConta);
-            bancoRepository.save(banco);
-        }
+    public Banco inserirBanco(Banco banco) {
+        Optional<Banco> verificarBanco = bancoRepository.findById(banco.getId());
+        return bancoRepository.save(banco);
     }
 
     @Override
-    public void getExtrato() {
-
+    public Conta getExtrato(long id) {
+        Optional<Conta> conta = contaRepository.findById(id);
+        return conta.get();
     }
-
 }
