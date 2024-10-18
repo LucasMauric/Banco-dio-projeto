@@ -35,7 +35,7 @@ public class ContaRestController {
         return ResponseEntity.ok(contaService.depositar(id,valor));
     }
 
-    @PostMapping("/depositar")
+    @PostMapping("/transferir")
     public ResponseEntity<Double> transferir(@RequestBody Long id, double valor){
         return ResponseEntity.ok(contaService.transferir(id,valor));
     }
