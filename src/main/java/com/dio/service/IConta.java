@@ -11,11 +11,9 @@ import java.util.List;
 public interface IConta {
      String gerarChavePix();
      Conta inserirConta(Conta conta);
-     void sacar(Long id, double saldo);
-     void depositar(Long id,Double valor);
-     void transferir(Double valor, Long id);
+     double sacar(Long id, double saldo);
+     double depositar(Long id,double valor);
+     double transferir(Long id,double valor);
      Banco inserirBanco(Banco banco);
      Conta getExtrato(long id);
-
-
 }

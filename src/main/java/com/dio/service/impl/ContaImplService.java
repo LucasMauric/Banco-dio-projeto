@@ -27,37 +27,43 @@ public class ContaImplService implements IConta {
     }
 
     @Override
-    public void sacar(Long id , double valor) {
+    public double sacar(Long id , double valor) {
         Optional<Conta> banco =  contaRepository.findById(id);
+        double saldoRetirado = 0D;
         if(banco.isPresent()){
-            double saldoRetirado = banco.get().getSaldo() - valor;
+            saldoRetirado = banco.get().getSaldo() - valor;
             banco.get().setSaldo(saldoRetirado);
             contaRepository.save(banco.get());
         }else{
             System.out.println("Saldo insuficiente!");
         }
+        return saldoRetirado;
     }
 
     @Override
-    public void depositar(Long id , Double valor) {
+    public double depositar(Long id , double valor) {
         Optional<Conta> conta = contaRepository.findById(id);
+        double saldoDepositar = 0D;
         if(conta.isPresent()){
-            double saldoDepositar = conta.get().getSaldo() + valor;
+            saldoDepositar = conta.get().getSaldo() + valor;
             conta.get().setSaldo(saldoDepositar);
             contaRepository.save(conta.get());
         }
+        return saldoDepositar;
     }
 
     @Override
-    public void transferir(Double valor, Long id) {
+    public double transferir(Long id,double valor ) {
         Optional<Conta> contaDestino = contaRepository.findById(id);
+        double novoSaldo = 0d;
         if(contaDestino.isPresent()){
-            double novoSaldo = contaDestino.get().getSaldo() + valor;
+            novoSaldo = contaDestino.get().getSaldo() + valor;
             contaDestino.get().setSaldo(novoSaldo);
             contaRepository.save(contaDestino.get());
         }else{
             System.out.println("Chave pix inválida!");
         }
+        return novoSaldo;
     }
 
     @Override

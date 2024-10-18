@@ -25,4 +25,20 @@ public class ContaRestController {
     public ResponseEntity<Banco> inserirBanco(@RequestBody Banco banco){
         return  ResponseEntity.ok(contaService.inserirBanco(banco));
     }
+
+    @PostMapping("/sacar")
+    public ResponseEntity<Double> sacar(@RequestBody Long id, double valor){
+        return ResponseEntity.ok(contaService.sacar(id,valor));
+    }
+    @PostMapping("/depositar")
+    public ResponseEntity<Double> depositar(@RequestBody Long id, double valor){
+        return ResponseEntity.ok(contaService.depositar(id,valor));
+    }
+
+    @PostMapping("/depositar")
+    public ResponseEntity<Double> transferir(@RequestBody Long id, double valor){
+        return ResponseEntity.ok(contaService.transferir(id,valor));
+    }
+
+
 }
