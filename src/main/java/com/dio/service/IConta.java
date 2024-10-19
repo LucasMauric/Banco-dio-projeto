@@ -13,7 +13,7 @@ public interface IConta {
      Conta inserirConta(Conta conta);
      double sacar(Long id, double saldo);
      double depositar(Long id,double valor);
-     double transferir(Long id,double valor);
+     double transferir(Long id, double valor, Long idOrigem);
      Banco inserirBanco(Banco banco);
      Conta getExtrato(long id);
 }

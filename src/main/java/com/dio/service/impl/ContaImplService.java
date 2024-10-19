@@ -53,11 +53,14 @@ public class ContaImplService implements IConta {
     }
 
     @Override
-    public double transferir(Long id,double valor ) {
+    public double transferir(Long id,double valor, Long idOrigem ) {
         Optional<Conta> contaDestino = contaRepository.findById(id);
+        Optional<Conta> contaOrigem = contaRepository.findById(idOrigem);
         double novoSaldo = 0d;
         if(contaDestino.isPresent()){
+            double valorContaOrigem = contaOrigem.get().getSaldo() - valor;
             novoSaldo = contaDestino.get().getSaldo() + valor;
+            contaOrigem.get().setSaldo(valorContaOrigem);
             contaDestino.get().setSaldo(novoSaldo);
             contaRepository.save(contaDestino.get());
         }else{

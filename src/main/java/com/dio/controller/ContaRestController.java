@@ -15,17 +15,14 @@ public class ContaRestController {
     public ResponseEntity<Conta> getExtrato(@PathVariable long id){
         return  ResponseEntity.ok(contaService.getExtrato(id));
     }
-
     @PostMapping
     public ResponseEntity<Conta> inserirConta(@RequestBody Conta conta){
         return ResponseEntity.ok( contaService.inserirConta(conta));
     }
-
     @PostMapping("/banco")
     public ResponseEntity<Banco> inserirBanco(@RequestBody Banco banco){
         return  ResponseEntity.ok(contaService.inserirBanco(banco));
     }
-
     @PostMapping("/sacar")
     public ResponseEntity<Double> sacar(@RequestBody Long id, double valor){
         return ResponseEntity.ok(contaService.sacar(id,valor));
@@ -34,11 +31,9 @@ public class ContaRestController {
     public ResponseEntity<Double> depositar(@RequestBody Long id, double valor){
         return ResponseEntity.ok(contaService.depositar(id,valor));
     }
-
     @PostMapping("/transferir")
-    public ResponseEntity<Double> transferir(@RequestBody Long id, double valor){
-        return ResponseEntity.ok(contaService.transferir(id,valor));
+    public ResponseEntity<Double> transferir(@RequestBody Long id, double valor,Long idOrigem){
+        return ResponseEntity.ok(contaService.transferir(id,valor,idOrigem));
     }
-
 
 }
