@@ -19,7 +19,6 @@ public class ClienteRestController {
     public ResponseEntity<Cliente> buscarPorId(@PathVariable Long id){
         return ResponseEntity.ok(clienteService.buscarPorId(id));
     }
-
     @PostMapping
     public ResponseEntity<Cliente> inserir(@RequestBody Cliente cliente){
             clienteService.inserir(cliente);
@@ -35,8 +34,4 @@ public class ClienteRestController {
         clienteService.deletar(id);
         return ResponseEntity.ok().build();
     }
-
-
-
-
 }
